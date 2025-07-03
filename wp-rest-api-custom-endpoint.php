@@ -24,25 +24,21 @@ add_action('rest_api_init', function () {
 function custom_api_bearer_token_check($request)
 {
     $headers = $request->get_headers();
-    echo "<pre>request";
-    print_r($request);
-    echo "</pre>";
-    echo "<pre>headers";
-    print_r($headers);
-    echo "</pre>";
-    return;
+    // echo "<hr><pre>HEADERS";
+    // print_r($headers);
+    // echo "</pre>";
 
-    if (!isset($headers['authorization'])) {
+    if (!isset($headers['authorization']) || empty($headers['authorization'])) {
         return new WP_Error('rest_forbidden', 'Authorization Bearer Token is missing.', array('status' => 401));
     }
 
-    $token_parts = explode(" ", $headers);
+    $token_parts = explode(" ", reset($headers['authorization']));
     if (count($token_parts) !== 2 || strtolower($token_parts[0]) !== 'bearer') {
         return new WP_Error('rest_forbidden', 'Authorization Bearer Token is missing.', array('status' => 401));
     }
 
     // $token = $token_parts[1];
-
+    // Here you can add your logic to validate the token
     return true;
 }
 
@@ -70,7 +66,9 @@ function custom_prefix_get_v1_products($request)
     }
 
     // Check if customer
-    if (!in_array('customer', $user->roles)) {
-        return new WP_Error('invalid_user_role', 'User must be customer.', array('status' => 401));
-    }
+    // if (!in_array('customer', $user->roles)) {
+    //     return new WP_Error('invalid_user_role', 'User must be customer.', array('status' => 401));
+    // }
+
+    return 'OK';
 }
