@@ -15,8 +15,8 @@ add_action('rest_api_init', function () {
         array(
             'methods'  => 'POST',
             'callback' => 'custom_prefix_get_v1_products',
-            'permission_callback' => '__return_true',
-            // 'permission_callback' => 'custom_api_bearer_token_check',
+            // 'permission_callback' => '__return_true',
+            'permission_callback' => 'custom_api_bearer_token_check',
         )
     );
 });
